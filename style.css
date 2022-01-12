@@ -1,15 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Pushster&family=Righteous&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@1,300&family=Righteous&display=swap');
 * {
     margin: 0;
     padding:0;
     box-sizing:border-box;
     text-decoration: none;
 }
-
+html {
+    scroll-behavior: smooth;
+  }
 body {
-    font-size: 100%;
-    background: linear-gradient(65deg, #19043b 20%, #670cf2 80%);
+    background-color: #111111;
+    margin: 0;
+    overflow-x: hidden;
 }
 
 .cabecalho {
@@ -17,8 +21,10 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    padding:20px;
+    padding:10px;
+    background-color: rgb(8, 8, 8);
 }
+
 
 .cabecalho-imagem {
     height: 50px;
@@ -37,16 +43,17 @@ body {
 
 .cabecalho-menu-item:hover {
     color:slateblue;
+    font-size: 19px;
 }
 
 .conteudo {
-    border-top: 0.4px solid white;
+    border-top: 0.4px solid rgb(82, 81, 81);
     margin-bottom: 48px;
 }
 
 .conteudo-principal {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: space-around;
     padding:20px;
@@ -57,22 +64,38 @@ body {
     gap: 10px;
 }
 .conteudo-principal-escrito-titulo {
-    font-family: 'Righteous', cursive;
+    font-family: 'Merriweather Sans';
     font-weight: 400;
-    font-size: 64px;
+    font-size: 52px;
     color: rgba(255, 255, 255, 0.733);
+    padding: 20px;
+    border-bottom: 0.4px solid rgb(82, 81, 81);
 }
 .conteudo-principal-escrito-paragrafo {
-    font-family: 'Pushster', cursive;
+    font-family: 'Pushster';
     font-weight: 400;
     font-size: 18px;
     color:rgba(255, 255, 255, 0.733);
+    text-align: center;
 }
 
 .conteudo-principal-imagem {
     height: 320px;
     border: solid 0.4px black;
 }
+.github-link-fodase{
+    font-family: 'Pushster';
+    font-size:18px;
+    color:rgba(253, 253, 253, 0.945);
+    text-align: center;
+    
+}
+
+.github-link-fodase:hover{
+    color:slateblue;
+    font-size:18.5px
+}
+
 
 .conteudo-secundario {
     display: flex;
@@ -83,7 +106,7 @@ body {
 }
 
 .conteudo-secundario-escrito{
-    border-top: 0.4px solid rgba(255, 255, 255, 0.733);
+    border-top: 0.4px solid rgb(82, 81, 81);
     padding-top: 40px;
 }
 
@@ -104,14 +127,20 @@ body {
 
 .conteudo-secundario-escrito-item:hover {
     color:slateblue;
+    text-shadow: darkorchid;
 }
 
 .rodape {
     padding: 20px;
-    border-top: 0.4px solid rgba(255, 255, 255, 0.733);
+    border-top: 0.4px solid rgb(82, 81, 81);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-around;
 }
 
-.rodape-texto {
+.rodape-texto1 {
     font-family: 'Righteous', cursive;
     font-weight: 400;
     font-size: 12px;
@@ -119,3 +148,56 @@ body {
     display:block;
     margin: 0 auto;
 }
+
+.rodape-texto2{
+    font-family: 'Righteous', cursive;
+    font-weight: 400;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.733);
+    display:block;
+    margin: 0 auto;
+}
+.rodape-texto2:hover{
+    color: slateblue;
+}
+
+.rodape-texto3{
+    font-family: 'Righteous', cursive;
+    font-weight: 400;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.733);
+    display:block;
+    margin: 0 auto;
+}
+
+.rodape-texto3:hover{
+    color: slateblue;
+}
+
+.about-conteudo {
+    border-top: 0.4px solid rgb(82, 81, 81);
+    padding: 20px;
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+}
+
+.about-texto-principal {
+    padding: 8px;
+    
+}
+
+.about-texto-principal-titulo {
+    font-family: 'Righteous', cursive;
+    font-weight: 400;
+    font-size: 36px;
+    color: rgba(255, 255, 255, 0.733)    
+}
+
+.about-texto-principal-texto {
+    font-family: 'Pushster', cursive;
+    font-weight: 400;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.733);
+}
+
