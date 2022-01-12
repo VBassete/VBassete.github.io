@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Pushster&family=Righteous&display=swap');
+
+* {
+    margin: 0;
+    padding:0;
+    box-sizing:border-box;
+    text-decoration: none;
+}
+
+body {
+    font-size: 100%;
+    background: linear-gradient(65deg, #19043b 20%, #670cf2 80%);
+}
+
+.cabecalho {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding:20px;
+}
+
+.cabecalho-imagem {
+    height: 50px;
+}
+
+.cabecalho-menu {
+    display: flex;
+    gap: 32px;
+}
+.cabecalho-menu-item {
+    font-family: Pushster;
+    font-size: 18px;
+    font-weight: 400;
+    color:rgba(255, 255, 255, 0.733)
+}
+
+.cabecalho-menu-item:hover {
+    color:slateblue;
+}
+
+.conteudo {
+    border-top: 0.4px solid white;
+    margin-bottom: 48px;
+}
+
+.conteudo-principal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding:20px;
+}
+.conteudo-principal-escrito {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.conteudo-principal-escrito-titulo {
+    font-family: 'Righteous', cursive;
+    font-weight: 400;
+    font-size: 64px;
+    color: rgba(255, 255, 255, 0.733);
+}
+.conteudo-principal-escrito-paragrafo {
+    font-family: 'Pushster', cursive;
+    font-weight: 400;
+    font-size: 18px;
+    color:rgba(255, 255, 255, 0.733);
+}
+
+.conteudo-principal-imagem {
+    height: 320px;
+    border: solid 0.4px black;
+}
+
+.conteudo-secundario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-top: 48px;
+}
+
+.conteudo-secundario-escrito{
+    border-top: 0.4px solid rgba(255, 255, 255, 0.733);
+    padding-top: 40px;
+}
+
+.conteudo-secundario-escrito-titulo {
+    font-family: 'Righteous', cursive;
+    font-weight: 400;
+    font-size: 40px;
+    color: rgba(255, 255, 255, 0.733);
+    margin-bottom: 16px;
+}
+
+.conteudo-secundario-escrito-item {
+    font-family: 'Pushster', cursive;
+    font-weight: 400;
+    font-size: 18px;
+    color:rgba(255, 255, 255, 0.733);
+}
+
+.conteudo-secundario-escrito-item:hover {
+    color:slateblue;
+}
+
+.rodape {
+    padding: 20px;
+    border-top: 0.4px solid rgba(255, 255, 255, 0.733);
+}
+
+.rodape-texto {
+    font-family: 'Righteous', cursive;
+    font-weight: 400;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.733);
+    display:block;
+    margin: 0 auto;
+}
