@@ -26,7 +26,7 @@ Sol.name = "Sol"
 scene.add(Sol)
 
 //Cria a Terra :)
-var TerraGeometry = new THREE.SphereGeometry(0.5,32,32);
+var TerraGeometry = new THREE.SphereGeometry(0.1,32,32);
 var TerraMaterial = new THREE.MeshBasicMaterial({color:0x0000ff});
 var Terra = new THREE.Mesh(TerraGeometry, TerraMaterial);
 Terra.name = "Terra"
@@ -39,25 +39,25 @@ animate(scene,renderer, camera)
 }
 
 function animate(scene,renderer, camera){
-    Tempo += 1.0
+    Tempo += 0.0001;
     var AnomaliaMedia = (2 * Math.PI * Tempo)/TerraPeriodo;
     var Anomalia = AnomaliaMedia + 2*TerraExcentricidade * Math.sin(AnomaliaMedia);
     var distancia = (TerraSemiEixoMaior*(1-TerraExcentricidade*TerraExcentricidade))/(1 + TerraExcentricidade * Math.cos(Anomalia));
 
     var x = distancia * Math.cos(Anomalia);
-    var y = 0;
-    var z = distancia * Math.sin(Anomalia);
+    var y = distancia * Math.sin(Anomalia); // 0
+    var z = 0; //distancia * Math.sin(Anomalia)
 
-    var cosInclinacao = Math.cos(TerraInclinacao)
-    var sinInclinacao = Math.sin(TerraInclinacao)
-    var cosNo = Math.cos(TerraNoLongitude)
-    var sinNo = Math.sin(TerraNoLongitude)
-    var cosPeriapsis = Math.cos(TerraPeriapsis)
-    var sinPeriapsis = Math.sin(TerraPeriapsis)
+    var cosInclinacao = Math.cos(TerraInclinacao);
+    var sinInclinacao = Math.sin(TerraInclinacao);
+    var cosNo = Math.cos(TerraNoLongitude);
+    var sinNo = Math.sin(TerraNoLongitude);
+    var cosPeriapsis = Math.cos(TerraPeriapsis);
+    var sinPeriapsis = Math.sin(TerraPeriapsis);
 
     var xFinal = (cosNo*cosPeriapsis-sinNo*sinPeriapsis*cosInclinacao)*x+(-cosNo*sinPeriapsis-sinNo*cosPeriapsis*cosInclinacao)*y;
     var yFinal = (sinNo*cosPeriapsis+cosNo*sinPeriapsis*cosInclinacao)*x+(-sinNo*sinPeriapsis+cosNo*cosPeriapsis*cosInclinacao)*y;
-    var zFinal = z //(sinPeriapsis*sinInclinacao)* x + (cosPeriapsis*cosPeriapsis)*y;
+    var zFinal = (sinPeriapsis*sinInclinacao)* x + (cosPeriapsis*cosPeriapsis)*y;
 
     var Terra = scene.getObjectByName("Terra");
     Terra.position.set(xFinal, yFinal, zFinal);
