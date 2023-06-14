@@ -9,7 +9,7 @@ var TerraNoLongitude = 0;
 var TerraPeriapsis = 0;
 var Tempo = 0.0;
 
-var 		scene,
+var 	scene,
 		camera,
 		renderer;
 
@@ -35,7 +35,7 @@ scene.add(Terra)
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth,window.innerHeight);
 document.body.appendChild(renderer.domElement);
-animate(scene,renderer, camera)
+animate(scene,renderer, camera);
 }
 
 function animate(scene,renderer, camera){
@@ -45,8 +45,8 @@ function animate(scene,renderer, camera){
     var distancia = (TerraSemiEixoMaior*(1-TerraExcentricidade*TerraExcentricidade))/(1 + TerraExcentricidade * Math.cos(Anomalia));
 
     var x = distancia * Math.cos(Anomalia);
-    var y = distancia * Math.sin(Anomalia); // 0
-    var z = 0; //distancia * Math.sin(Anomalia)
+    var y = distancia * Math.sin(Anomalia);
+    var z = 0;
 
     var cosInclinacao = Math.cos(TerraInclinacao);
     var sinInclinacao = Math.sin(TerraInclinacao);
