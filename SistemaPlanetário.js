@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 
-var TerraSemiEixoMaior = 1;
+var TerraSemiEixoMaior = 100;
 var TerraExcentricidade = 0.0167;
 var TerraInclinacao = 0;
 var TerraPeriodo = 365.25;
