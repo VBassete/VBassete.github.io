@@ -61,7 +61,7 @@ function animate(scene,renderer, camera){
 
     var Terra = scene.getObjectByName("Terra");
     Terra.position.set(xFinal, yFinal, zFinal);
+    requestAnimationFrame(() => animate(scene,renderer, camera));
     renderer.render(scene,camera);
-    requestAnimationFrame(animate);
 }
 main()
