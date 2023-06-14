@@ -38,7 +38,7 @@ function main(){
 }
 
 function animate(scene,renderer, camera){
-    Tempo += 0.0001;
+    Tempo += 0.1;
     var AnomaliaMedia = (2 * Math.PI * Tempo)/TerraPeriodo;
     var Anomalia = AnomaliaMedia + 2*TerraExcentricidade * Math.sin(AnomaliaMedia);
     var distancia = (TerraSemiEixoMaior*(1-TerraExcentricidade*TerraExcentricidade))/(1 + TerraExcentricidade * Math.cos(Anomalia));
