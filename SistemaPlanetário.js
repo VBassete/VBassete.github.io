@@ -35,10 +35,10 @@ scene.add(Terra)
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth,window.innerHeight);
 document.body.appendChild(renderer.domElement);
-requestAnimationFrame(animate);
+animate(scene,renderer, camera)
 }
 
-function animate(){
+function animate(scene,renderer, camera){
     Tempo += 1.0
     var AnomaliaMedia = (2 * Math.PI * Tempo)/TerraPeriodo;
     var Anomalia = AnomaliaMedia + 2*TerraExcentricidade * Math.sin(AnomaliaMedia);
