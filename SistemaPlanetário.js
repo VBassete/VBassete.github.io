@@ -57,7 +57,7 @@ function animate(scene,renderer, camera){
 
     var xFinal = (cosNo*cosPeriapsis-sinNo*sinPeriapsis*cosInclinacao)*x+(-cosNo*sinPeriapsis-sinNo*cosPeriapsis*cosInclinacao)*y;
     var yFinal = (sinNo*cosPeriapsis+cosNo*sinPeriapsis*cosInclinacao)*x+(-sinNo*sinPeriapsis+cosNo*cosPeriapsis*cosInclinacao)*y;
-    var zFinal = (sinPeriapsis*sinInclinacao)* x + (cosPeriapsis*cosPeriapsis)*y;
+    var zFinal = z //(sinPeriapsis*sinInclinacao)* x + (cosPeriapsis*cosPeriapsis)*y;
 
     var Terra = scene.getObjectByName("Terra");
     Terra.position.set(xFinal, yFinal, zFinal);
