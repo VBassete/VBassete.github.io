@@ -9,6 +9,10 @@ var TerraNoLongitude = 0;
 var TerraPeriapsis = 0;
 var Tempo = 0.0;
 
+var 		scene,
+		camera,
+		renderer;
+
 function main(){
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1,1000);
