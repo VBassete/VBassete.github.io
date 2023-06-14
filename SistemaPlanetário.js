@@ -1,10 +1,6 @@
 import * as THREE from 'three'
 
-function main(){
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1,1000);
-camera.position.z=5;
-  
+
 var TerraSemiEixoMaior = 1;
 var TerraExcentricidade = 0.0167;
 var TerraInclinacao = 0;
@@ -12,6 +8,13 @@ var TerraPeriodo = 365.25;
 var TerraNoLongitude = 0;
 var TerraPeriapsis = 0;
 var Tempo = 0.0;
+
+function main(){
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1,1000);
+camera.position.z=5;
+  
+
 
 //Cria o sol
 var SolGeometry = new THREE.SphereGeometry(1,32,32);
@@ -35,7 +38,7 @@ function animate(){
     Tempo += 1.0
     var AnomaliaMedia = (2 * Math.PI * Tempo)/TerraPeriodo;
     var Anomalia = AnomaliaMedia + 2*TerraExcentricidade * Math.sin(AnomaliaMedia);
-    var distanceia = (TerraSemiEixoMaior*(1-TerraExcentricidade*TerraExcentricidade))/(1 + TerraExcentricidade * Math.cos(Anomalia));
+    var distancia = (TerraSemiEixoMaior*(1-TerraExcentricidade*TerraExcentricidade))/(1 + TerraExcentricidade * Math.cos(Anomalia));
 
     var x = distancia * Math.cos(Anomalia);
     var y = 0;
