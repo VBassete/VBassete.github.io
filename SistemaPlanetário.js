@@ -38,7 +38,7 @@ document.body.appendChild(renderer.domElement);
 requestAnimationFrame(animate);
 }
 
-function animate(time){
+function animate(){
     Tempo += 1.0
     var AnomaliaMedia = (2 * Math.PI * Tempo)/TerraPeriodo;
     var Anomalia = AnomaliaMedia + 2*TerraExcentricidade * Math.sin(AnomaliaMedia);
