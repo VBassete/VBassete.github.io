@@ -14,18 +14,18 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1,1000);
 camera.position.z=5;
   
-
-
 //Cria o sol
 var SolGeometry = new THREE.SphereGeometry(1,32,32);
 var SolMaterial = new THREE.MeshBasicMaterial({color:0xffff00});
 var Sol = new THREE.Mesh(SolGeometry, SolMaterial);
+Sol.name = "Sol"
 scene.add(Sol)
 
 //Cria a Terra :)
 var TerraGeometry = new THREE.SphereGeometry(0.5,32,32);
 var TerraMaterial = new THREE.MeshBasicMaterial({color:0x0000ff});
 var Terra = new THREE.Mesh(TerraGeometry, TerraMaterial);
+Terra.name = "Terra"
 scene.add(Terra)
 
 var renderer = new THREE.WebGLRenderer();
@@ -34,7 +34,7 @@ document.body.appendChild(renderer.domElement);
 requestAnimationFrame(animate);
 }
 
-function animate(){
+function animate(time){
     Tempo += 1.0
     var AnomaliaMedia = (2 * Math.PI * Tempo)/TerraPeriodo;
     var Anomalia = AnomaliaMedia + 2*TerraExcentricidade * Math.sin(AnomaliaMedia);
@@ -55,6 +55,7 @@ function animate(){
     var yFinal = (sinNo*cosPeriapsis+cosNo*sinPeriapsis*cosInclinacao)*x+(-sinNo*sinPeriapsis+cosNo*cosPeriapsis*cosInclinacao)*y;
     var zFinal = (sinPeriapsis*sinInclinacao)* x + (cosPeriapsis*cosPeriapsis)*y;
 
+    var Terra = scene.getObjectByName("Terra");
     Terra.position.set(xFinal, yFinal, zFinal);
     renderer.render(scene,camera);
     requestAnimationFrame(animate);
