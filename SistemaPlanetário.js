@@ -1,16 +1,12 @@
 import * as THREE from 'three'
 
-var TerraSemiEixoMaior = 100;
+var TerraSemiEixoMaior = 3;
 var TerraExcentricidade = 0.0167;
-var TerraInclinacao = 0;
+var TerraInclinacao = 3.1415*7.155/180;
 var TerraPeriodo = 365.25;
-var TerraNoLongitude = 0;
-var TerraPeriapsis = 0;
+var TerraNoLongitude = 3.1415*174.9/180;
+var TerraPeriapsis = 3.1415*288.1/180;
 var Tempo = 0.0;
-
-var 	scene,
-		camera,
-		renderer;
 
 function main(){
     var scene = new THREE.Scene();
@@ -38,7 +34,7 @@ function main(){
 }
 
 function animate(scene,renderer, camera){
-    Tempo += 0.1;
+    Tempo += 1;
     var AnomaliaMedia = (2 * Math.PI * Tempo)/TerraPeriodo;
     var Anomalia = AnomaliaMedia + 2*TerraExcentricidade * Math.sin(AnomaliaMedia);
     var distancia = (TerraSemiEixoMaior*(1-TerraExcentricidade*TerraExcentricidade))/(1 + TerraExcentricidade * Math.cos(Anomalia));
@@ -59,7 +55,7 @@ function animate(scene,renderer, camera){
     var zFinal = (sinPeriapsis*sinInclinacao)* x + (cosPeriapsis*cosPeriapsis)*y;
 
     var Terra = scene.getObjectByName("Terra");
-    Terra.position.set(xFinal, yFinal, zFinal);
+    Terra.position.set(xFinal, zFinal, yFinal);
     requestAnimationFrame(() => animate(scene,renderer, camera));
     renderer.render(scene,camera);
 }
