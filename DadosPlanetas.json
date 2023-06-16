@@ -5,7 +5,10 @@
         "Inclinacao": 7.00,
         "Periodo": 87.969,
         "NoLongitude": 48.33,
-        "Periapsis": 29.13
+        "Periapsis": 29.13,
+        "RotateX":0,
+        "RotateY":58.646,
+        "RotateZ":0
     },
     "Venus":{
         "SemiEixoMaior":0.723,
@@ -13,7 +16,10 @@
         "Inclinacao":3.39,
         "Periodo": 224.701,
         "NoLongitude":76.68,
-        "Periapsis":54.88        
+        "Periapsis":54.88,
+        "RotateX":0,
+        "RotateY":-243.021,
+        "RotateZ":0     
     },
     "Terra":{
         "SemiEixoMaior":1,
@@ -21,7 +27,10 @@
         "Inclinacao":7.155,
         "Periodo": 365.25,
         "NoLongitude":174.873,
-        "Periapsis":288.064        
+        "Periapsis":288.064,
+        "RotateX":0,
+        "RotateY":1,
+        "RotateZ":0        
     },
     "Marte":{
         "SemiEixoMaior":1.523,
@@ -29,7 +38,10 @@
         "Inclinacao":1.849,
         "Periodo": 686.91 ,
         "NoLongitude":49.558,
-        "Periapsis":286.502        
+        "Periapsis":286.502,
+        "RotateX":0,
+        "RotateY":1.025,
+        "RotateZ":0        
     },
     "Jupiter":{
         "SemiEixoMaior":2.2026, 
@@ -37,7 +49,10 @@
         "Inclinacao":1.303,
         "Periodo": 4331.572,
         "NoLongitude":100.46,
-        "Periapsis":273.867        
+        "Periapsis":273.867 ,
+        "RotateX":0,
+        "RotateY":0.4083,
+        "RotateZ":0       
     },
     "Saturno":{
         "SemiEixoMaior":3.554,
@@ -45,7 +60,10 @@
         "Inclinacao":2.488,
         "Periodo":10759.22,
         "NoLongitude":113.665,
-        "Periapsis":339.385       
+        "Periapsis":339.385,
+        "RotateX":0,
+        "RotateY":0.4375,
+        "RotateZ":0       
     },
     "Urano":{
         "SemiEixoMaior":4.2184,
@@ -53,7 +71,10 @@
         "Inclinacao":0.7731,
         "Periodo":30799.095,
         "NoLongitude":74.0052,
-        "Periapsis":99        
+        "Periapsis":99,
+        "RotateX":-0.71833,
+        "RotateY":0,
+        "RotateZ":0        
     },
     "Netuno":{
         "SemiEixoMaior":5.1104,
@@ -61,6 +82,9 @@
         "Inclinacao":1.7699,
         "Periodo":60190.03,
         "NoLongitude":131.7841,
-        "Periapsis":276.3362        
+        "Periapsis":276.3362,
+        "RotateX":0,
+        "RotateY":0.6713,
+        "RotateZ":0        
     }
 }

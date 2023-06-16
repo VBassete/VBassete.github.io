@@ -8,7 +8,7 @@ var Tempo = 0.0;
 
 function main(){
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1,2000);
+    var camera = new THREE.PerspectiveCamera(120, window.innerWidth / window.innerHeight, 1,2000);
     //var camera = new THREE.OrthographicCamera( -120.0, 120.0, 120.0, -120.0, -120.0, 120.0 );
     camera.position.z=5;
     
@@ -82,9 +82,16 @@ function main(){
     scene.add(Saturno)
 
     //Cria Urano
+    var Urano = new THREE.Group()
     var UranoGeometry = new THREE.SphereGeometry(0.4,32,32);
     var UranoMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_uranus.jpg")});
-    var Urano = new THREE.Mesh(UranoGeometry, UranoMaterial);
+    var urano = new THREE.Mesh(UranoGeometry, UranoMaterial);
+    Urano.add(urano)
+    var uAnelGeometry = new THREE.RingGeometry(0.5,0.55,32);
+    var uAnelMaterial = new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/uranusringcolor.jpg")});
+    var uAnel = new THREE.Mesh(uAnelGeometry, uAnelMaterial);
+    uAnel.rotateX(Math.PI*90/180)
+    Urano.add(uAnel)
     Urano.name = "Urano"
     scene.add(Urano)
 
@@ -135,7 +142,9 @@ function animate(scene,renderer, camera){
         let curObj = scene.getObjectByName(planeta);
         let fPosition = calcMovimento(1+dados["SemiEixoMaior"], dados["Excentricidade"], 3.1415/180*dados["Inclinacao"],dados["Periodo"], 3.1415/180*dados["NoLongitude"], 3.1415/180*dados["Periapsis"], Tempo);
         curObj.position.set(fPosition[0], fPosition[1], fPosition[2]);
-        curObj.rotateY(0.1)
+        curObj.rotateX(dados["RotateX"])
+        curObj.rotateY(dados["RotateY"])
+        curObj.rotateZ(dados["RotateZ"])
     }
     let Sol = scene.getObjectByName("Sol")
     Sol.rotateY(0.001)
