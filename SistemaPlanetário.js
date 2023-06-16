@@ -1,17 +1,14 @@
 import * as THREE from 'three'
 import DadosPlanetas from "./DadosPlanetas.json" assert {type: 'json'}; 
 
-console.log(DadosPlanetas["Mercurio"]);
-
 let planets = ["Mercurio", "Venus", "Terra", "Marte", "Jupiter", "Saturno", "Urano", "Netuno"]
 var Tempo = 0.0;
 
 function main(){
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(120, window.innerWidth / window.innerHeight, 1,2000);
-    //var camera = new THREE.OrthographicCamera( -120.0, 120.0, 120.0, -120.0, -120.0, 120.0 );
-    camera.position.z=5;
-    
+    camera.position.z=6;
+    //Coloca a luz no centro do sol
     const luz = new THREE.PointLight(0xffffff, 0.8, 500);
     luz.position.set(0,0,0)
     scene.add(luz)
@@ -41,11 +38,9 @@ function main(){
     var TerraGeometry = new THREE.SphereGeometry(0.3,32,32);
     var TerraMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_earth_daymap.jpg")});
     var terra = new THREE.Mesh(TerraGeometry, TerraMaterial);
-    //Terra.name = "Terra"
     var LuaGeometry = new THREE.SphereGeometry(0.1,32,32);
     var LuaMaterial = new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_moon.jpg")});
     var lua = new THREE.Mesh(LuaGeometry, LuaMaterial);
-    //Lua.name="Lua"
     var Terra = new THREE.Group();
     Terra.name="Terra";
     Terra.add(terra);
@@ -67,7 +62,7 @@ function main(){
     Jupiter.name = "Jupiter";
     scene.add(Jupiter);
 
-    //Cria saturno
+    //Cria saturno e gruda o anel nele
     var Saturno = new THREE.Group();
     var SaturnoGeometry = new THREE.SphereGeometry(0.4,32,32);
     var SaturnoMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_saturn.jpg")});
@@ -81,7 +76,7 @@ function main(){
     Saturno.name = "Saturno"
     scene.add(Saturno)
 
-    //Cria Urano
+    //Cria Urano e gruda o anel nele
     var Urano = new THREE.Group()
     var UranoGeometry = new THREE.SphereGeometry(0.4,32,32);
     var UranoMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_uranus.jpg")});
@@ -90,17 +85,17 @@ function main(){
     var uAnelGeometry = new THREE.RingGeometry(0.5,0.55,32);
     var uAnelMaterial = new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/uranusringcolor.jpg")});
     var uAnel = new THREE.Mesh(uAnelGeometry, uAnelMaterial);
-    uAnel.rotateX(Math.PI*90/180)
-    Urano.add(uAnel)
-    Urano.name = "Urano"
-    scene.add(Urano)
+    uAnel.rotateY(Math.PI*90/180);
+    Urano.add(uAnel);
+    Urano.name = "Urano";
+    scene.add(Urano);
 
     //Cria Netuno
     var NetunoGeometry = new THREE.SphereGeometry(0.4,32,32);
     var NetunoMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_neptune.jpg")});
     var Netuno = new THREE.Mesh(NetunoGeometry, NetunoMaterial);
-    Netuno.name = "Netuno"
-    scene.add(Netuno)
+    Netuno.name = "Netuno";
+    scene.add(Netuno);
 
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth,window.innerHeight);
@@ -108,7 +103,7 @@ function main(){
     animate(scene,renderer, camera);
 }
 
-
+//Movimento dos planetas
 function calcMovimento(SemiEixoMaior, Excentricidade, Inclinacao, Periodo, NoLongitude, Periapsis, Tempo){
     var AnomaliaMedia = (2 * Math.PI * Tempo)/Periodo;
     var Anomalia = AnomaliaMedia + 2*Excentricidade * Math.sin(AnomaliaMedia);
@@ -137,17 +132,17 @@ function animate(scene,renderer, camera){
     for(let i = 0; i<=7;i++){
         
         let planeta = planets[i];
-        //console.log(planeta);
         let dados = DadosPlanetas[planeta];
         let curObj = scene.getObjectByName(planeta);
         let fPosition = calcMovimento(1+dados["SemiEixoMaior"], dados["Excentricidade"], 3.1415/180*dados["Inclinacao"],dados["Periodo"], 3.1415/180*dados["NoLongitude"], 3.1415/180*dados["Periapsis"], Tempo);
-        curObj.position.set(fPosition[0], fPosition[1], fPosition[2]);
-        curObj.rotateX(dados["RotateX"])
-        curObj.rotateY(dados["RotateY"])
-        curObj.rotateZ(dados["RotateZ"])
-    }
-    let Sol = scene.getObjectByName("Sol")
-    Sol.rotateY(0.001)
+        curObj.position.set(fPosition[0],fPosition[1],fPosition[2]);
+        let Checa0 = (x) => (x === 0 ? 0 : 1 / x);
+        curObj.rotateX(2*Math.PI*Checa0(dados["RotateX"])*Tempo);
+        curObj.rotateY(Checa0(dados["RotateY"])*Tempo);
+        curObj.rotateZ(Checa0(dados["RotateZ"])*Tempo);
+    };
+    let Sol = scene.getObjectByName("Sol");
+    Sol.rotateY(0.001);
     requestAnimationFrame(() => animate(scene,renderer, camera));
     renderer.render(scene,camera);
 }
