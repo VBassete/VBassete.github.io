@@ -3,23 +3,16 @@ import DadosPlanetas from "./DadosPlanetas.json" assert {type: 'json'};
 
 console.log(DadosPlanetas["Mercurio"]);
 
-var TerraSemiEixoMaior = 3;
-var TerraExcentricidade = 0.0167;
-var TerraInclinacao = 3.1415*7.155/180;
-var TerraPeriodo = 365.25;
-var TerraNoLongitude = 3.1415*174.9/180;
-var TerraPeriapsis = 3.1415*288.1/180;
-
 let planets = ["Mercurio", "Venus", "Terra", "Marte", "Jupiter", "Saturno", "Urano", "Netuno"]
 var Tempo = 0.0;
 
 function main(){
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1,2000);
+    var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1,2000);
     //var camera = new THREE.OrthographicCamera( -120.0, 120.0, 120.0, -120.0, -120.0, 120.0 );
     camera.position.z=5;
     
-    const luz = new THREE.PointLight(0xffffff, 2, 500);
+    const luz = new THREE.PointLight(0xffffff, 0.8, 500);
     luz.position.set(0,0,0)
     scene.add(luz)
 
@@ -38,55 +31,69 @@ function main(){
     scene.add(Mercurio);
 
     //Cria Venus
-    var VenusGeometry = new THREE.SphereGeometry(0.1,32,32);
+    var VenusGeometry = new THREE.SphereGeometry(0.2,32,32);
     var VenusMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_venus_surface.jpg")});
     var Venus = new THREE.Mesh(VenusGeometry,VenusMaterial);
     Venus.name="Venus";
     scene.add(Venus);
 
-    //Cria a Terra :)
-    var TerraGeometry = new THREE.SphereGeometry(0.1,32,32);
+    //Cria a Terra e gruda a lua nela :)
+    var TerraGeometry = new THREE.SphereGeometry(0.3,32,32);
     var TerraMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_earth_daymap.jpg")});
-    var Terra = new THREE.Mesh(TerraGeometry, TerraMaterial);
-    Terra.name = "Terra"
-    scene.add(Terra)
+    var terra = new THREE.Mesh(TerraGeometry, TerraMaterial);
+    //Terra.name = "Terra"
+    var LuaGeometry = new THREE.SphereGeometry(0.1,32,32);
+    var LuaMaterial = new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_moon.jpg")});
+    var lua = new THREE.Mesh(LuaGeometry, LuaMaterial);
+    //Lua.name="Lua"
+    var Terra = new THREE.Group();
+    Terra.name="Terra";
+    Terra.add(terra);
+    Terra.add(lua);
+    lua.position.set(0.4,0,0);
+    scene.add(Terra);
 
     //Cria marte
-    var MarteGeometry = new THREE.SphereGeometry(0.1,32,32);
+    var MarteGeometry = new THREE.SphereGeometry(0.25,32,32);
     var MarteMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_mars.jpg")});
     var Marte = new THREE.Mesh(MarteGeometry, MarteMaterial);
     Marte.name = "Marte"
-    scene.add(Marte)
+    scene.add(Marte);
 
     //Cria Jupiter
-    var JupiterGeometry = new THREE.SphereGeometry(0.1,32,32);
+    var JupiterGeometry = new THREE.SphereGeometry(0.6,32,32);
     var JupiterMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_jupiter.jpg")});
     var Jupiter = new THREE.Mesh(JupiterGeometry, JupiterMaterial);
-    Jupiter.name = "Jupiter"
-    scene.add(Jupiter)
-
+    Jupiter.name = "Jupiter";
+    scene.add(Jupiter);
 
     //Cria saturno
-    var SaturnoGeometry = new THREE.SphereGeometry(0.1,32,32);
+    var Saturno = new THREE.Group();
+    var SaturnoGeometry = new THREE.SphereGeometry(0.4,32,32);
     var SaturnoMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_saturn.jpg")});
-    var Saturno = new THREE.Mesh(SaturnoGeometry, SaturnoMaterial);
+    var saturno = new THREE.Mesh(SaturnoGeometry, SaturnoMaterial);
+    Saturno.add(saturno)
+    var sAnelGeometry = new THREE.RingGeometry(0.5,0.6,32);
+    var sAnelMaterial = new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/saturnringcolor.jpg")});
+    var sAnel = new THREE.Mesh(sAnelGeometry, sAnelMaterial);
+    sAnel.rotateX(Math.PI*90/180)
+    Saturno.add(sAnel);
     Saturno.name = "Saturno"
     scene.add(Saturno)
 
     //Cria Urano
-    var UranoGeometry = new THREE.SphereGeometry(0.1,32,32);
+    var UranoGeometry = new THREE.SphereGeometry(0.4,32,32);
     var UranoMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_uranus.jpg")});
     var Urano = new THREE.Mesh(UranoGeometry, UranoMaterial);
     Urano.name = "Urano"
     scene.add(Urano)
 
     //Cria Netuno
-    var NetunoGeometry = new THREE.SphereGeometry(0.1,32,32);
+    var NetunoGeometry = new THREE.SphereGeometry(0.4,32,32);
     var NetunoMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_neptune.jpg")});
     var Netuno = new THREE.Mesh(NetunoGeometry, NetunoMaterial);
     Netuno.name = "Netuno"
     scene.add(Netuno)
-
 
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth,window.innerHeight);
@@ -127,7 +134,7 @@ function animate(scene,renderer, camera){
         let dados = DadosPlanetas[planeta];
         let curObj = scene.getObjectByName(planeta);
         let fPosition = calcMovimento(1+dados["SemiEixoMaior"], dados["Excentricidade"], 3.1415/180*dados["Inclinacao"],dados["Periodo"], 3.1415/180*dados["NoLongitude"], 3.1415/180*dados["Periapsis"], Tempo);
-        curObj.position.set(fPosition[0], fPosition[2], fPosition[1]);
+        curObj.position.set(fPosition[0], fPosition[1], fPosition[2]);
         curObj.rotateY(0.1)
     }
     let Sol = scene.getObjectByName("Sol")

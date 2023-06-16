@@ -32,7 +32,7 @@
         "Periapsis":286.502        
     },
     "Jupiter":{
-        "SemiEixoMaior":2.2026, 
+        "SemiEixoMaior":5.2026, 
         "Excentricidade":0.04849,
         "Inclinacao":1.303,
         "Periodo": 4331.572,
@@ -40,15 +40,15 @@
         "Periapsis":273.867        
     },
     "Saturno":{
-        "SemiEixoMaior":3.554,
+        "SemiEixoMaior":9.554,
         "Excentricidade":0.055,
         "Inclinacao":2.488,
-        "Periodo":10759.22,
+        "Periodo":1075922,
         "NoLongitude":113.665,
         "Periapsis":339.385       
     },
     "Urano":{
-        "SemiEixoMaior":4.2184,
+        "SemiEixoMaior":19.2184,
         "Excentricidade":0.0463,
         "Inclinacao":0.7731,
         "Periodo":30799.095,
@@ -56,7 +56,7 @@
         "Periapsis":99        
     },
     "Netuno":{
-        "SemiEixoMaior":5.1104,
+        "SemiEixoMaior":30.1104,
         "Excentricidade":0.009455,
         "Inclinacao":1.7699,
         "Periodo":60190.03,
