@@ -1,4 +1,7 @@
 import * as THREE from 'three'
+import DadosPlanetas from "./DadosPlanetas.json" assert {type: 'json'}; 
+
+console.log(DadosPlanetas["Mercurio"]);
 
 var TerraSemiEixoMaior = 3;
 var TerraExcentricidade = 0.0167;
@@ -6,6 +9,8 @@ var TerraInclinacao = 3.1415*7.155/180;
 var TerraPeriodo = 365.25;
 var TerraNoLongitude = 3.1415*174.9/180;
 var TerraPeriapsis = 3.1415*288.1/180;
+
+let planets = ["Mercurio", "Venus", "Terra", "Marte", "Jupiter", "Saturno", "Urano", "Netuno"]
 var Tempo = 0.0;
 
 function main(){
@@ -19,14 +24,28 @@ function main(){
 
     //Cria o sol
     var SolGeometry = new THREE.SphereGeometry(1,32,32);
-    var SolMaterial = new THREE.MeshBasicMaterial({color:0xffff00, map: new THREE.TextureLoader().load('Assets/Texturas/SistemaSolar/2k_sun.jpg')});
+    var SolMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load('Assets/Texturas/SistemaSolar/2k_sun.jpg')});
     var Sol = new THREE.Mesh(SolGeometry, SolMaterial);
     Sol.name = "Sol"
     scene.add(Sol)
 
+    //Cria a Mercurio
+    var MercurioGeometry = new THREE.SphereGeometry(0.1,32,32);
+    var MercurioMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_mercury.jpg")});
+    var Mercurio = new THREE.Mesh(MercurioGeometry,MercurioMaterial);
+    Mercurio.name="Mercurio";
+    scene.add(Mercurio);
+
+    //Cria Venus
+    var VenusGeometry = new THREE.SphereGeometry(0.1,32,32);
+    var VenusMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_venus_surface.jpg")});
+    var Venus = new THREE.Mesh(VenusGeometry,VenusMaterial);
+    Venus.name="Venus";
+    scene.add(Venus);
+
     //Cria a Terra :)
     var TerraGeometry = new THREE.SphereGeometry(0.1,32,32);
-    var TerraMaterial = new THREE.MeshBasicMaterial({color:0x0000ff, map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_earth_daymap.jpg")});
+    var TerraMaterial = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_earth_daymap.jpg")});
     var Terra = new THREE.Mesh(TerraGeometry, TerraMaterial);
     Terra.name = "Terra"
     scene.add(Terra)
@@ -42,7 +61,7 @@ function calcMovimento(SemiEixoMaior, Excentricidade, Inclinacao, Periodo, NoLon
     var AnomaliaMedia = (2 * Math.PI * Tempo)/Periodo;
     var Anomalia = AnomaliaMedia + 2*Excentricidade * Math.sin(AnomaliaMedia);
     var distancia = (SemiEixoMaior*(1-Excentricidade*Excentricidade))/(1 + Excentricidade * Math.cos(Anomalia));
-    console.log(distancia);
+    //console.log(distancia);
     var x = distancia * Math.cos(Anomalia);
     var y = distancia * Math.sin(Anomalia);
     var z = 0;
@@ -62,12 +81,19 @@ function calcMovimento(SemiEixoMaior, Excentricidade, Inclinacao, Periodo, NoLon
 }
 
 function animate(scene,renderer, camera){
-    Tempo += 1;
-    var fPosition = []
-    var Terra = scene.getObjectByName("Terra");
-    Terra.rotateY(0.1)
-    fPosition = calcMovimento(TerraSemiEixoMaior,TerraExcentricidade, TerraInclinacao, TerraPeriodo, TerraNoLongitude, TerraPeriapsis, Tempo);
-    Terra.position.set(fPosition[0], fPosition[2], fPosition[1]);
+    Tempo += 0.1;
+    for(let i = 0; i<3;i++){
+        
+        let planeta = planets[i];
+        //console.log(planeta);
+        let dados = DadosPlanetas[planeta];
+        let curObj = scene.getObjectByName(planeta);
+        let fPosition = calcMovimento(2+dados["SemiEixoMaior"], dados["Excentricidade"], 3.1415/180*dados["Inclinacao"],dados["Periodo"], 3.1415/180*dados["NoLongitude"], 3.1415/180*dados["Periapsis"], Tempo);
+        curObj.position.set(fPosition[0], fPosition[2], fPosition[1]);
+        curObj.rotateY(0.1)
+    }
+    let Sol = scene.getObjectByName("Sol")
+    Sol.rotateY(0.001)
     requestAnimationFrame(() => animate(scene,renderer, camera));
     renderer.render(scene,camera);
 }
