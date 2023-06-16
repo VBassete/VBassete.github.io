@@ -1,3 +1,7 @@
+/*
+((((((((((((((((())))))))))))))))) Feito por Vinícius Barbosa Bassete ((((((((((((((((()))))))))))))))))
+*/
+
 import * as THREE from 'three'
 import DadosPlanetas from "./DadosPlanetas.json" assert {type: 'json'}; 
 
