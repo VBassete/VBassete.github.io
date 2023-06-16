@@ -1,5 +1,7 @@
 /*
+(((((((((((((((((((((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))))))))))))))))))
 ((((((((((((((((())))))))))))))))) Feito por Vinícius Barbosa Bassete ((((((((((((((((()))))))))))))))))
+(((((((((((((((((((((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))))))))))))))))))
 */
 
 import * as THREE from 'three'
@@ -142,8 +144,8 @@ function animate(scene,renderer, camera){
         curObj.position.set(fPosition[0],fPosition[1],fPosition[2]);
         let Checa0 = (x) => (x === 0 ? 0 : 1 / x);
         curObj.rotateX(2*Math.PI*Checa0(dados["RotateX"])*Tempo);
-        curObj.rotateY(Checa0(dados["RotateY"])*Tempo);
-        curObj.rotateZ(Checa0(dados["RotateZ"])*Tempo);
+        curObj.rotateY(2*Math.PI*Checa0(dados["RotateY"])*Tempo);
+        curObj.rotateZ(2*Math.PI*Checa0(dados["RotateZ"])*Tempo);
     };
     let Sol = scene.getObjectByName("Sol");
     Sol.rotateY(0.001);
