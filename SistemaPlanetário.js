@@ -13,16 +13,20 @@ function main(){
     var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1,1000);
     camera.position.z=5;
     
+    const luz = new THREE.PointLight(0xffffff, 5, 100);
+    luz.position.set(0,0,0)
+    scene.add(luz)
+
     //Cria o sol
     var SolGeometry = new THREE.SphereGeometry(1,32,32);
-    var SolMaterial = new THREE.MeshBasicMaterial({color:0xffff00});
+    var SolMaterial = new THREE.MeshBasicMaterial({color:0xffff00, map: new THREE.TextureLoader().load('Assets/Texturas/SistemaSolar/2k_sun.jpg')});
     var Sol = new THREE.Mesh(SolGeometry, SolMaterial);
     Sol.name = "Sol"
     scene.add(Sol)
 
     //Cria a Terra :)
     var TerraGeometry = new THREE.SphereGeometry(0.1,32,32);
-    var TerraMaterial = new THREE.MeshBasicMaterial({color:0x0000ff});
+    var TerraMaterial = new THREE.MeshBasicMaterial({color:0x0000ff, map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_earth_daymap.jpg")});
     var Terra = new THREE.Mesh(TerraGeometry, TerraMaterial);
     Terra.name = "Terra"
     scene.add(Terra)
@@ -33,29 +37,37 @@ function main(){
     animate(scene,renderer, camera);
 }
 
-function animate(scene,renderer, camera){
-    Tempo += 1;
-    var AnomaliaMedia = (2 * Math.PI * Tempo)/TerraPeriodo;
-    var Anomalia = AnomaliaMedia + 2*TerraExcentricidade * Math.sin(AnomaliaMedia);
-    var distancia = (TerraSemiEixoMaior*(1-TerraExcentricidade*TerraExcentricidade))/(1 + TerraExcentricidade * Math.cos(Anomalia));
+
+function calcMovimento(SemiEixoMaior, Excentricidade, Inclinacao, Periodo, NoLongitude, Periapsis, Tempo){
+    var AnomaliaMedia = (2 * Math.PI * Tempo)/Periodo;
+    var Anomalia = AnomaliaMedia + 2*Excentricidade * Math.sin(AnomaliaMedia);
+    var distancia = (SemiEixoMaior*(1-Excentricidade*Excentricidade))/(1 + Excentricidade * Math.cos(Anomalia));
     console.log(distancia);
     var x = distancia * Math.cos(Anomalia);
     var y = distancia * Math.sin(Anomalia);
     var z = 0;
 
-    var cosInclinacao = Math.cos(TerraInclinacao)
-    var sinInclinacao = Math.sin(TerraInclinacao)
-    var cosNo = Math.cos(TerraNoLongitude)
-    var sinNo = Math.sin(TerraNoLongitude)
-    var cosPeriapsis = Math.cos(TerraPeriapsis)
-    var sinPeriapsis = Math.sin(TerraPeriapsis)
+    var cosInclinacao = Math.cos(Inclinacao)
+    var sinInclinacao = Math.sin(Inclinacao)
+    var cosNo = Math.cos(NoLongitude)
+    var sinNo = Math.sin(NoLongitude)
+    var cosPeriapsis = Math.cos(Periapsis)
+    var sinPeriapsis = Math.sin(Periapsis)
 
     var xFinal = (cosNo*cosPeriapsis-sinNo*sinPeriapsis*cosInclinacao)*x+(-cosNo*sinPeriapsis-sinNo*cosPeriapsis*cosInclinacao)*y;
     var yFinal = (sinNo*cosPeriapsis+cosNo*sinPeriapsis*cosInclinacao)*x+(-sinNo*sinPeriapsis+cosNo*cosPeriapsis*cosInclinacao)*y;
     var zFinal = (sinPeriapsis*sinInclinacao)* x + (cosPeriapsis*cosPeriapsis)*y;
 
+    return [xFinal, yFinal, zFinal]
+}
+
+function animate(scene,renderer, camera){
+    Tempo += 1;
+    var fPosition = []
     var Terra = scene.getObjectByName("Terra");
-    Terra.position.set(xFinal, zFinal, yFinal);
+    Terra.rotateY(0.1)
+    fPosition = calcMovimento(TerraSemiEixoMaior,TerraExcentricidade, TerraInclinacao, TerraPeriodo, TerraNoLongitude, TerraPeriapsis, Tempo);
+    Terra.position.set(fPosition[0], fPosition[2], fPosition[1]);
     requestAnimationFrame(() => animate(scene,renderer, camera));
     renderer.render(scene,camera);
 }
