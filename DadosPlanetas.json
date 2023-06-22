@@ -55,7 +55,7 @@
         "RotateZ":0       
     },
     "Saturno":{
-        "SemiEixoMaior":3.554,
+        "SemiEixoMaior":4.554,
         "Excentricidade":0.055,
         "Inclinacao":2.488,
         "Periodo":10759.22,
@@ -66,7 +66,7 @@
         "RotateZ":0       
     },
     "Urano":{
-        "SemiEixoMaior":4.2184,
+        "SemiEixoMaior":5.2184,
         "Excentricidade":0.0463,
         "Inclinacao":0.7731,
         "Periodo":30799.095,
@@ -77,7 +77,7 @@
         "RotateZ":0        
     },
     "Netuno":{
-        "SemiEixoMaior":5.1104,
+        "SemiEixoMaior":6.1104,
         "Excentricidade":0.009455,
         "Inclinacao":1.7699,
         "Periodo":60190.03,
