@@ -11,7 +11,7 @@ import { GUI } 		from '../../Assets/scripts/three.js/examples/jsm/libs/lil-gui.m
 let planets = ["Mercurio", "Venus", "Terra", "Marte", "Jupiter", "Saturno", "Urano", "Netuno"]
 var Tempo = 0.0;
 var gui = new GUI();
-let vel, comands,fov, camera;
+let vel, comands,fov, scale;
 let RevX = true, RevY=true, RevZ=true;
 function main(){
     var scene = new THREE.Scene();
@@ -81,7 +81,9 @@ function main(){
     var saturno = new THREE.Mesh(SaturnoGeometry, SaturnoMaterial);
     Saturno.add(saturno)
     var sAnelGeometry = new THREE.RingGeometry(0.5,0.6,32);
-    var sAnelMaterial = new THREE.MeshPhongMaterial({map: new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_saturn_ring_alpha.png")});
+    var texture = new THREE.TextureLoader().load("Assets/Texturas/SistemaSolar/2k_saturn_ring_alpha.png", function (texture) {
+        texture.flipY = false;})
+    var sAnelMaterial = new THREE.MeshPhongMaterial({map: texture});
     var sAnel = new THREE.Mesh(sAnelGeometry, sAnelMaterial);
     sAnel.rotateX(Math.PI*90/180)
     Saturno.add(sAnel);
@@ -118,13 +120,15 @@ function main(){
 function initGUI(camera) {
 
 	vel = 	{VelTempo : 1};
-    fov = {FOV : 110}
+    fov = {FOV : 110};
+    scale = {Escala: 1};
     comands = {RevX:true,RevY:true,RevZ:true};
 	gui.add( vel, 'VelTempo',0,10,0.1);
+    gui.add(scale, "Escala",1,1.5,0.1);
     gui.add(fov, "FOV", 50,150,10).onChange(value => camera.fov=(value));
     gui.add(comands, 'RevX').onChange(value => RevX = !RevX);
-    gui.add(comands, "RevY").onChange(value => RevY = !RevY);;
-    gui.add(comands, "RevZ").onChange(value => RevZ = !RevZ);;
+    gui.add(comands, "RevY").onChange(value => RevY = !RevY);
+    gui.add(comands, "RevZ").onChange(value => RevZ = !RevZ);
     gui.open();
 };
 
@@ -137,13 +141,13 @@ function calcMovimento(SemiEixoMaior, Excentricidade, Inclinacao, Periodo, NoLon
     var x = distancia * Math.cos(Anomalia);
     var y = distancia * Math.sin(Anomalia);
     var z = 0;
-
     var cosInclinacao = Math.cos(Inclinacao)
     var sinInclinacao = Math.sin(Inclinacao)
     var cosNo = Math.cos(NoLongitude)
     var sinNo = Math.sin(NoLongitude)
     var cosPeriapsis = Math.cos(Periapsis)
     var sinPeriapsis = Math.sin(Periapsis)
+
     if(RevX == true){
         var xFinal = (cosNo*cosPeriapsis-sinNo*sinPeriapsis*cosInclinacao)*x+(-cosNo*sinPeriapsis-sinNo*cosPeriapsis*cosInclinacao)*y;
     }else{
@@ -155,7 +159,7 @@ function calcMovimento(SemiEixoMaior, Excentricidade, Inclinacao, Periodo, NoLon
         var yFinal = 0;
     };
     if(RevZ == true){
-    var zFinal = (sinPeriapsis*sinInclinacao)* x + (cosPeriapsis*cosPeriapsis)*y;
+    var zFinal = sinPeriapsis * sinInclinacao * x + cosPeriapsis * sinInclinacao * y + cosInclinacao * z; //zFinal = (sinPeriapsis*sinInclinacao)* x + (cosPeriapsis*cosPeriapsis)*y;
     }else{
         var zFinal = 0;
     };
@@ -169,7 +173,7 @@ function animate(scene,renderer, camera){
         let planeta = planets[i];
         let dados = DadosPlanetas[planeta];
         let curObj = scene.getObjectByName(planeta);
-        let fPosition = calcMovimento(1+dados["SemiEixoMaior"], dados["Excentricidade"], 3.1415/180*dados["Inclinacao"],dados["Periodo"], 3.1415/180*dados["NoLongitude"], 3.1415/180*dados["Periapsis"], Tempo);
+        let fPosition = calcMovimento(1+dados["SemiEixoMaior"]*scale.Escala, dados["Excentricidade"], 3.1415/180*dados["Inclinacao"],dados["Periodo"], 3.1415/180*dados["NoLongitude"], 3.1415/180*dados["Periapsis"], Tempo);
         curObj.position.set(fPosition[0],fPosition[1],fPosition[2]);
         let Checa0 = (x) => (x === 0 ? 0 : 1 / x);
         curObj.rotateX(2*Math.PI*Checa0(dados["RotateX"])*vel.VelTempo);
