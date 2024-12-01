@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cartão 3D Interativo com Transparência</title>
+    <style>
+        body { 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            background-color: #000000; 
+        }
+        canvas { 
+            max-width: 100%; 
+            max-height: 100%; 
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Configurações do cartão
+        const CARD_WIDTH = 4;
+        const CARD_HEIGHT = 6;
+        const CARD_DEPTH = 0.01;
+
+        // Imagens do cartão (substitua pelos seus próprios caminhos)
+        const FRONT_IMAGE = 'https://cdn.discordapp.com/attachments/1283239749636853822/1312618074511376445/yena_verso.png?ex=674d2658&is=674bd4d8&hm=17c1c0d7832d6d7dc825f9a5d315b34ffd72131120b14bd0e5288035bd245152&';
+        const BACK_IMAGE = 'yena_verso.png';
+
+        class Card3D {
+            constructor() {
+                this.initScene();
+                this.createCard();
+                this.setupLighting();
+                this.setupEventListeners();
+                this.animate();
+            }
+
+            initScene() {
+                // Configuração da cena com suporte a transparência
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                
+                // Adiciona renderizador com suporte a transparência
+                this.renderer = new THREE.WebGLRenderer({ 
+                    antialias: true,
+                    alpha: true  // Permite transparência de fundo
+                });
+                
+                this.renderer.setClearColor(0x000000, 0); // Fundo totalmente transparente
+                this.renderer.setPixelRatio(window.devicePixelRatio);
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                
+                // Habilita processamento de transparência
+                this.renderer.outputEncoding = THREE.sRGBEncoding;
+                this.renderer.transparent = true;
+                
+                document.body.appendChild(this.renderer.domElement);
+                
+                this.camera.position.z = 10;
+            }
+
+            createCard() {
+                // Geometria do cartão
+                const geometry = new THREE.BoxGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_DEPTH);
+                
+                // Carrega as texturas com suporte a transparência
+                const textureLoader = new THREE.TextureLoader();
+                const frontTexture = textureLoader.load(FRONT_IMAGE, (texture) => {
+                    texture.minFilter = THREE.LinearFilter;
+                    texture.magFilter = THREE.LinearFilter;
+                });
+                const backTexture = textureLoader.load(BACK_IMAGE, (texture) => {
+                    texture.minFilter = THREE.LinearFilter;
+                    texture.magFilter = THREE.LinearFilter;
+                });
+
+                // Materiais com suporte a transparência
+                const materials = [
+                    new THREE.MeshBasicMaterial({ color: 0xcccccc }), // lateral direita
+                    new THREE.MeshBasicMaterial({ color: 0xcccccc }), // lateral esquerda
+                    new THREE.MeshBasicMaterial({ color: 0xcccccc }), // topo
+                    new THREE.MeshBasicMaterial({ color: 0xcccccc }), // base
+                    new THREE.MeshBasicMaterial({ 
+                        map: frontTexture,
+                        transparent: true,  // Habilita transparência
+                        alphaTest: 0.5     // Threshold para transparência
+                    }), 
+                    new THREE.MeshBasicMaterial({ 
+                        map: backTexture,
+                        transparent: true,  // Habilita transparência
+                        alphaTest: 0.5     // Threshold para transparência
+                    })
+                ];
+
+                this.card = new THREE.Mesh(geometry, materials);
+                this.scene.add(this.card);
+            }
+
+            setupLighting() {
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.01);
+                this.scene.add(ambientLight);
+            }
+
+            setupEventListeners() {
+                document.addEventListener('mousemove', (event) => {
+                    const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                    const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+                    
+                    this.card.rotation.y = mouseX * Math.PI / 4;
+                    this.card.rotation.x = mouseY * Math.PI / 4;
+                });
+
+                window.addEventListener('resize', () => {
+                    const width = window.innerWidth;
+                    const height = window.innerHeight;
+                    
+                    this.camera.aspect = width / height;
+                    this.camera.updateProjectionMatrix();
+                    this.renderer.setSize(width, height);
+                });
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                
+                this.card.rotation.y += 0.005;
+                
+                this.renderer.render(this.scene, this.camera);
+            }
+        }
+
+        // Inicializa o cartão quando o documento carrega
+        document.addEventListener('DOMContentLoaded', () => new Card3D());
+    </script>
+</body>
+</html>
